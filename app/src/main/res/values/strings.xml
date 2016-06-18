@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RealmDatabase</string>
+    <string name="product_name">Detail Product</string>
+    <string name="product_detail">Detail Product</string>
+    <array name="sort_type">
+        <item>Product</item>
+        <item>Quantity</item>
+    </array>
+</resources>
