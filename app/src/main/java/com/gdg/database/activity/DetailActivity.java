@@ -1,5 +1,6 @@
 package com.gdg.database.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.gdg.database.R;
+import com.gdg.database.database.ProductDAL;
+import com.gdg.database.model.Product;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -34,8 +37,34 @@ public class DetailActivity extends AppCompatActivity {
         quantityText = (EditText) findViewById(R.id.product_quantity);
 
         insertButton = (Button) findViewById(R.id.add_btn);
+
+        insertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                insertProduct();
+            }
+        });
     }
 
+    private void insertProduct() {
+        String productName = productNameText.getText().toString();
+        String productCompany = productCompanyText.getText().toString();
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityText.getText().toString());
+
+        } catch (Exception ex) {
+            quantity = 0;
+        }
+
+        Product product = new Product(productName, productCompany, quantity);
+        ProductDAL.insertProduct(product);
+
+        // Show to Activity
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -13,6 +13,8 @@ import android.widget.Spinner;
 
 import com.gdg.database.R;
 import com.gdg.database.adapter.ProductAdapter;
+import com.gdg.database.database.PrefStore;
+import com.gdg.database.database.ProductDAL;
 import com.gdg.database.model.Product;
 
 import java.util.ArrayList;
@@ -22,6 +24,11 @@ public class ListActivity extends AppCompatActivity {
 
     List<Product> productList;
     Spinner spinner;
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +44,7 @@ public class ListActivity extends AppCompatActivity {
 
 
         productList = new ArrayList<>();
-        productList.add(new Product("Apple", "Lazada", 100));
-        productList.add(new Product("Mac", "Google", 50));
-        productList.add(new Product("Mac", "Google", 50));
-        productList.add(new Product("Mac", "Google", 50));
-        productList.add(new Product("Mac", "Google", 50));
-        productList.add(new Product("Mac", "Google", 50));
-
+        productList = ProductDAL.getAllList();
 
         // recycle view
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_view);
@@ -58,9 +59,11 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setSelection(PrefStore.getSortType(this));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PrefStore.setSortType(ListActivity.this, position);
                 ProductAdapter adapter = new ProductAdapter(productList);
                 recyclerView.setAdapter(adapter);
             }
@@ -86,4 +89,5 @@ public class ListActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, DetailActivity.class);
         startActivity(myIntent);
     }
+
 }

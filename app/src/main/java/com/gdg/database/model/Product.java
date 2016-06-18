@@ -1,14 +1,25 @@
 package com.gdg.database.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Index;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by hqthao on 6/5/16.
  */
 
-public class Product {
+public class Product extends RealmObject {
 
+    @PrimaryKey
+    @Index
     private String productName;
+    @Index
     private String productCompany;
     private int quantity;
+
+    public Product() {
+
+    }
 
     public Product(String mProductName, String mProductCompany, int mQuantity) {
         this.productName = mProductName;
